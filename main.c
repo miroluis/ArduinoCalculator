@@ -2,35 +2,50 @@
 #include <string.h>
 #include <stdlib.h>
 
-int iPrintStr(char *c)
-{
-    printf(c);
+//Global variables
+    char newValue[19];
+    char cValor[19];
+
+int limpaNewValue(){
+    cValor[0] = '\0'; //limpa entrada de dados
+    newValue[0] = '\0';
+    return 0;
 }
 
-int iPrintLinha(char *fraseEcra){
+int iPrintLinha(char *fraseEcra, char operation){
     printf("#");
-    for (size_t i = 0; i < (16 - strlen(fraseEcra)); i++)
+    for (size_t i = 0; i < (15 - strlen(fraseEcra)); i++)
     {
         printf(" ");
     }
-    printf(fraseEcra);
+    if (operation != '\0')
+    {
+        printf(fraseEcra);
+        printf("%c", operation);
+    }
+    else{
+        printf(" ");
+        printf(fraseEcra);
+    }
     printf("#\n");
+    return 0;
 }
 
 int iUpdateStr(char *fraseEcra, char *valor)
 {
     strcat(fraseEcra, valor);
     fraseEcra[strlen(fraseEcra)-1]='\0';
+    return 0;
 }
 
 int main()
 {
+    int total;
+    int ioldValue;
+    int inewValue;
     char oldValue[19];
-    char newValue[19];
-    char cValor[19];
-    cValor[0] = '\0'; //limpa entrada de dados
+    limpaNewValue();
     oldValue[0] = '\0';
-    newValue[0] = '\0';
     char operation = '\0';
 
     iUpdateStr(oldValue, "");
@@ -39,37 +54,77 @@ int main()
     {
         //update screen
         printf("##################\n");
-        iPrintLinha(oldValue);
+        iPrintLinha(oldValue, operation);
         iUpdateStr(newValue, cValor);
-        iPrintLinha(newValue);
+        iPrintLinha(newValue, '\0');
         printf("##################\n");
 
-
         fgets(cValor, sizeof(cValor), stdin);  // read string
-// || cValor == '*'
-        if (cValor[0] == '+')
+
+        switch (cValor[0])
         {
-            cValor[0] = '\0';
+        case '+':
             strcpy(oldValue, newValue);
-            newValue[0] = '\0';
+            limpaNewValue();
             operation = '+';
+            break;
+        case '-':
+            strcpy(oldValue, newValue);
+            limpaNewValue();
+            operation = '-';
+            break;
+        case '*':
+            strcpy(oldValue, newValue);
+            limpaNewValue();
+            operation = '*';
+            break;
+        case '/':
+            strcpy(oldValue, newValue);
+            limpaNewValue();
+            operation = '/';
+            break;
+        case '=':
+            ioldValue = atoi(oldValue);
+            inewValue = atoi(newValue);
 
-        } else if (cValor[0] == '=')
-        {
-            int ioldValue = atoi(oldValue);
-            printf("O oldValue %d\n", ioldValue);
-            int inewValue = atoi(newValue);
-            printf("O newValue %d\n", inewValue);
+            switch (operation)
+            {
+            case '+':
+                total = ioldValue + inewValue;
+                break;
+            case '-':
+                total = ioldValue - inewValue;
+                break;
+            case '*':
+                total = ioldValue * inewValue;
+                break;
+            case '/':
+                total = ioldValue / inewValue;
+                break;
+            
+            default:
+                break;
+            }
 
-            int total = ioldValue + inewValue;
+
 
             oldValue[0] = '\0';
             sprintf(oldValue, "%d", total);
-            
-            //iUpdateStr(oldValue, cValor);
+            limpaNewValue();
+
+            break;
+        
+        default:
+            break;
         }
-        
-        
-        printf(" cValor = %s\n", cValor);
+
+        if (cValor[0] == '+')
+        {
+
+
+        } else if (cValor[0] == '=')
+        {
+
+        }
     } 
 }

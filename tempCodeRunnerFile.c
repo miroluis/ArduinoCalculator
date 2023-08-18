@@ -1,11 +1,6 @@
-    // int tamanho = 18 - strlen(valor);
-    // printf(" tamanho do valor %d\n", strlen(valor));
-
-    // char vazio[tamanho];
-    // for (int i = 1; i < tamanho - 1; i++)
+    // if (operation != "\0")
     // {
-    //     fraseEcra[i] = ' ';
+    //     printf(fraseEcra);
+    //     printf(operation);
     // }
-    // strcat(fraseEcra, valor);
-
-    // strcat(fraseEcra, "#\n");
+    // else{
