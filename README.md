@@ -1,6 +1,7 @@
 # ArduinoCalculator
 3D printed Arduino Calculator
-- [ ] Add - to the first number
-- [ ] Add decimal point to the number's
-- [ ] Add calculus to the operations
+- [x] Add - to the first number
+- [x] Add decimal point to the number's
 - [ ] Calculus with decimal point
+- [ ] Add calculus to the operations
+- [ ] div 0

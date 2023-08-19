@@ -33,6 +33,16 @@ int iPrintLinha(char *fraseEcra, char operation){
 
 int iUpdateStr(char *fraseEcra, char *valor)
 {
+    if (valor[0] < '*' || valor[0] > '9' ) // update if value is number
+    {
+        return 0;
+    }
+    char point[] = ".";
+    if (strstr(fraseEcra, point) != 0 && valor[0] == '.') //already have a point
+    {
+        return 0;
+    }
+    
     strcat(fraseEcra, valor);
     fraseEcra[strlen(fraseEcra)-1]='\0';
     return 0;
@@ -69,6 +79,9 @@ int main()
             operation = '+';
             break;
         case '-':
+            //printf("o tamanho do newValue é: %d\n", strlen(newValue));
+            // if (strlen(newValue) > 0) // assume negative values
+            // {
             strcpy(oldValue, newValue);
             limpaNewValue();
             operation = '-';
@@ -83,6 +96,13 @@ int main()
             limpaNewValue();
             operation = '/';
             break;
+        case 'z': //change signal
+            inewValue = atoi(newValue);
+            inewValue = inewValue * -1;
+            newValue[0] = '\0';
+            sprintf(newValue, "%d", inewValue);
+            //cValor[0] = '\0';
+        break;
         case '=':
             ioldValue = atoi(oldValue);
             inewValue = atoi(newValue);
@@ -116,15 +136,6 @@ int main()
         
         default:
             break;
-        }
-
-        if (cValor[0] == '+')
-        {
-
-
-        } else if (cValor[0] == '=')
-        {
-
         }
     } 
 }
