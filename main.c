@@ -50,9 +50,9 @@ int iUpdateStr(char *fraseEcra, char *valor)
 
 int main()
 {
-    int total;
-    int ioldValue;
-    int inewValue;
+    double total;
+    double ioldValue;
+    double inewValue;
     char oldValue[19];
     limpaNewValue();
     oldValue[0] = '\0';
@@ -97,20 +97,30 @@ int main()
             operation = '/';
             break;
         case 'z': //change signal
-            inewValue = atoi(newValue);
+            inewValue = atol(newValue);
             inewValue = inewValue * -1;
             newValue[0] = '\0';
-            sprintf(newValue, "%d", inewValue);
+            sprintf(newValue, "%f", inewValue);
             //cValor[0] = '\0';
         break;
         case '=':
-            ioldValue = atoi(oldValue);
-            inewValue = atoi(newValue);
+            //ioldValue = atol(oldValue);
+            //char str[30] = "20.30300 This is test";
+            char *ptr;
+            //double ret;
+
+            ioldValue = strtod(oldValue, &ptr);
+
+            //inewValue = atol(newValue);
+            inewValue = strtod(newValue, &ptr);
 
             switch (operation)
             {
             case '+':
                 total = ioldValue + inewValue;
+                printf (" valor: %f\n", ioldValue);
+                printf (" valor: %f\n", inewValue);
+                printf (" valor: %f\n", total);
                 break;
             case '-':
                 total = ioldValue - inewValue;
@@ -130,6 +140,7 @@ int main()
 
             oldValue[0] = '\0';
             sprintf(oldValue, "%d", total);
+            //ltoa(total, oldValue, 10);
             limpaNewValue();
 
             break;
