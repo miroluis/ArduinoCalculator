@@ -5,10 +5,57 @@
 //Global variables
     char newValue[19];
     char cValor[19];
+    char *ptr;
+
+    double total;
+    double ioldValue;
+    double inewValue;
 
 int limpaNewValue(){
     cValor[0] = '\0'; //limpa entrada de dados
     newValue[0] = '\0';
+    return 0;
+}
+
+int calculate(char lcOperation, char* l_oldValue){
+    ioldValue = strtod(l_oldValue, &ptr);
+    inewValue = strtod(newValue, &ptr);
+
+    switch (lcOperation)
+    {
+    case '+':
+        total = ioldValue + inewValue;
+        break;
+    case '-':
+        total = ioldValue - inewValue;
+        break;
+    case '*':
+        total = ioldValue * inewValue;
+        break;
+    case '/':
+        if (inewValue != 0)
+        {
+            total = ioldValue / inewValue;
+        }
+        else{
+            printf("erro div by zero");
+        }
+        
+        break;
+
+    default:
+        break;
+    }
+    //Debug
+    printf (" valor: %f\n", ioldValue);
+    printf (" valor: %f\n", inewValue);
+    printf (" valor: %.3f\n", total);
+
+
+    l_oldValue[0] = '\0';
+    sprintf(l_oldValue, "%g", total);
+
+    limpaNewValue();
     return 0;
 }
 
@@ -20,12 +67,12 @@ int iPrintLinha(char *fraseEcra, char operation){
     }
     if (operation != '\0')
     {
-        printf(fraseEcra);
+        printf("%s", fraseEcra);
         printf("%c", operation);
     }
     else{
         printf(" ");
-        printf(fraseEcra);
+        printf("%s", fraseEcra);
     }
     printf("#\n");
     return 0;
@@ -50,9 +97,6 @@ int iUpdateStr(char *fraseEcra, char *valor)
 
 int main()
 {
-    double total;
-    double ioldValue;
-    double inewValue;
     char oldValue[19];
     limpaNewValue();
     oldValue[0] = '\0';
@@ -74,75 +118,57 @@ int main()
         switch (cValor[0])
         {
         case '+':
-            strcpy(oldValue, newValue);
-            limpaNewValue();
+            if (oldValue[0] != '\0')
+            {
+                calculate(operation, oldValue);
+            }
+            else{
+                strcpy(oldValue, newValue);
+                limpaNewValue();
+            }
             operation = '+';
             break;
         case '-':
-            //printf("o tamanho do newValue é: %d\n", strlen(newValue));
-            // if (strlen(newValue) > 0) // assume negative values
-            // {
-            strcpy(oldValue, newValue);
-            limpaNewValue();
+            if (oldValue[0] != '\0')
+            {
+                calculate(operation, oldValue);
+            }
+            else{
+                strcpy(oldValue, newValue);
+                limpaNewValue();
+            }
             operation = '-';
             break;
         case '*':
-            strcpy(oldValue, newValue);
-            limpaNewValue();
+            if (oldValue[0] != '\0')
+            {
+                calculate(operation, oldValue);
+            }
+            else{
+                strcpy(oldValue, newValue);
+                limpaNewValue();
+            }
             operation = '*';
             break;
         case '/':
-            strcpy(oldValue, newValue);
-            limpaNewValue();
+            if (oldValue[0] != '\0')
+            {
+                calculate(operation, oldValue);
+            }
+            else{
+                strcpy(oldValue, newValue);
+                limpaNewValue();
+            }
             operation = '/';
             break;
         case 'z': //change signal
             inewValue = atol(newValue);
             inewValue = inewValue * -1;
             newValue[0] = '\0';
-            sprintf(newValue, "%f", inewValue);
-            //cValor[0] = '\0';
+            sprintf(newValue, "%g", inewValue);
         break;
         case '=':
-            //ioldValue = atol(oldValue);
-            //char str[30] = "20.30300 This is test";
-            char *ptr;
-            //double ret;
-
-            ioldValue = strtod(oldValue, &ptr);
-
-            //inewValue = atol(newValue);
-            inewValue = strtod(newValue, &ptr);
-
-            switch (operation)
-            {
-            case '+':
-                total = ioldValue + inewValue;
-                printf (" valor: %f\n", ioldValue);
-                printf (" valor: %f\n", inewValue);
-                printf (" valor: %f\n", total);
-                break;
-            case '-':
-                total = ioldValue - inewValue;
-                break;
-            case '*':
-                total = ioldValue * inewValue;
-                break;
-            case '/':
-                total = ioldValue / inewValue;
-                break;
-            
-            default:
-                break;
-            }
-
-
-
-            oldValue[0] = '\0';
-            sprintf(oldValue, "%d", total);
-            //ltoa(total, oldValue, 10);
-            limpaNewValue();
-
+            calculate(operation, oldValue);
             break;
         
         default:
